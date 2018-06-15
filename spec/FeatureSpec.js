@@ -13,7 +13,7 @@ describe('Feature Test: ', function(){
   // To get passengers to a destination
   // I want to instruct a plane to land at
   //   an airport and confirm that it has landed
-  
+
   it('planes can be instructed to land at an airport', function(){
     plane.land(airport);
     expect(airport.planes()).toContain(plane);
@@ -31,4 +31,14 @@ describe('Feature Test: ', function(){
     expect(airport.planes()).not.toContain(plane);
   });
 
+  //   As an air traffic controller
+  // To ensure safety
+  // I want to prevent takeoff when weather is stormy
+
+  it('blocks takeoff when weather is stormy', function() {
+    plane.land(airport)
+    spyOn(airport, 'isStormy').and.returnValue(true);
+    expect(function(){ plane.takeoff();}).toThrowError('cannot takeoff during storm');
+    expect(airport.planes()).toContain(plane);
+  });
 });
